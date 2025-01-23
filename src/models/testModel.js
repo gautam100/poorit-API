@@ -1,14 +1,14 @@
 const pool = require("../config/database");
 
 class TestModel {
-  static async fetchQuestions() {
+  static async fetchQuestions(ques_table, options_table) {
     const result = await pool.query(`WITH random_questions AS (
     SELECT 
         q.id,
         q.question,
         encode(q.correct_answer::text::bytea, 'base64') as correct_answer,
         q.is_enable
-    FROM exam.ques_ai q
+    FROM exam.`+ques_table+` q
     WHERE q.is_enable = true
     ORDER BY RANDOM()
     LIMIT 10
@@ -24,7 +24,7 @@ SELECT
         ) ORDER BY o.id
     ) AS options
 FROM random_questions rq
-LEFT JOIN exam.options_ai o ON o.ques_id = rq.id 
+LEFT JOIN exam.`+options_table+` o ON o.ques_id = rq.id 
 WHERE o.is_enable = true
 GROUP BY 
     rq.id,
@@ -38,7 +38,9 @@ ORDER BY rq.id
   static async fetchCategories() {
     const result = await pool.query(`SELECT 
         c.id,
-        c.cat_name
+        c.cat_name,
+        c.ques_table,
+        c.options_table
     FROM exam.master_category c
     WHERE c.is_enable = true ORDER BY c.sequence`);
     return result.rows;
