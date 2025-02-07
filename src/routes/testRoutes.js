@@ -4,5 +4,6 @@ const { Questions, Categories } = require("../controllers/testController");
 
 router.get("/questions/:ques_table/:options_table", Questions);
 router.get("/categories", Categories);
+router.get("/result/:user_id",Results);
 
 module.exports = router;

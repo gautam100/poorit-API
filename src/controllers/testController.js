@@ -3,7 +3,10 @@ const TestModel = require("../models/testModel");
 const Questions = async (req, res) => {
   try {
     //console.log(req.params.ques_table);
-    const questions = await TestModel.fetchQuestions(req.params.ques_table, req.params.options_table);
+    const questions = await TestModel.fetchQuestions(
+      req.params.ques_table,
+      req.params.options_table
+    );
     res.status(200).json({
       success: true,
       questions,
@@ -11,7 +14,7 @@ const Questions = async (req, res) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 const Categories = async (req, res) => {
   try {
@@ -23,9 +26,21 @@ const Categories = async (req, res) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
-module.exports = {  
-    Questions,
-    Categories
+const testResults = async (req, res) => {
+  try {
+    const result = await TestModel.saveResult();
+    res.status(200).json({
+      success: true,
+      result,
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = {
+  Questions,
+  Categories,
 };
