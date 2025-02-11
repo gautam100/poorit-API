@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Questions, Categories } = require("../controllers/testController");
+const { Questions, Categories, Results } = require("../controllers/testController");
 
 router.get("/questions/:ques_table/:options_table", Questions);
 router.get("/categories", Categories);
