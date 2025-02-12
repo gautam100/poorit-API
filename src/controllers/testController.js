@@ -32,13 +32,18 @@ const Results = async (req, res) => {
   try {
     const result = await TestModel.saveResult(
       req.params.user_id,
+      req.body
     );
     res.status(200).json({
       success: true,
       result,
     });
   } catch (error) {
-    throw error;
+    console.error('Error saving results:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
   }
 };
 

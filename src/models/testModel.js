@@ -52,9 +52,19 @@ ORDER BY rq.id
     return result.rows;
   }
 
-  static async saveResult(user_id) {
-    const body = req.body;
-    const result = await pool.query(`INSERT INTO exam_results (user_id, total_ques, total_correct_ans,total_incorrect_ans,total_category, created_on) VALUES('${user_id}','','','','','')`);
+  static async saveResult(user_id, resultData) {
+    const result = await pool.query(
+        `INSERT INTO exam.exam_results 
+        (user_id, total_ques, total_correct_ans, total_incorrect_ans, total_category, created_on) 
+        VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP)`,
+        [
+            user_id,
+            resultData.totalQuestions,
+            resultData.totalCorrect,
+            resultData.totalIncorrect,
+            resultData.resultArray.length
+        ]
+    );
     return result.rows;
   }
 }
