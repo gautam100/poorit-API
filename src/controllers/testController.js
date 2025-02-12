@@ -28,9 +28,11 @@ const Categories = async (req, res) => {
   }
 };
 
-const testResults = async (req, res) => {
+const Results = async (req, res) => {
   try {
-    const result = await TestModel.saveResult();
+    const result = await TestModel.saveResult(
+      req.params.user_id,
+    );
     res.status(200).json({
       success: true,
       result,
@@ -43,4 +45,5 @@ const testResults = async (req, res) => {
 module.exports = {
   Questions,
   Categories,
+  Results,
 };
