@@ -4,6 +4,7 @@ const config = require('./config/config.js');
 const authRoutes = require('./routes/authRoutes');
 const testRoutes = require('./routes/testRoutes');
 const errorHandler = require('./middleware/errorHandler');
+const instituteRoutes = require('./routes/institutes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 // Routes
 app.use('/api', authRoutes);
 app.use('/api', testRoutes);
+app.use('/api', instituteRoutes);
 
 // Error handler
 app.use(errorHandler);
